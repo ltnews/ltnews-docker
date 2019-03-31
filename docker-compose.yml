@@ -1,0 +1,62 @@
+version: "3"
+services:
+  ltnews-postgres:
+    build:
+      context: ./postgres
+    environment:
+      POSTGRES_USER: django_psql
+      POSTGRES_PASSWORD: django_psql
+      POSTGRES_DB: django_psql_db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  ltnews-elasticsearch:
+    build:
+      context: ./elasticsearch
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch_data:/var/lib/elasticsearch
+    restart: always
+
+  ltnews-django:
+    links:
+      - ltnews-postgres
+      - ltnews-elasticsearch
+    build:
+      context: ./django
+    ports:
+      - 8000:8000
+    volumes:
+      - ./django/ltnews-backend:/code
+    restart: always
+
+  ltnews-vuejs:
+    links:
+      - ltnews-django
+    build:
+      context: ./vuejs
+    ports:
+      - 8080:8080
+    volumes:
+      - ./vuejs/ltnews-fronted:/app
+    restart: always
+
+  ltnews-nginx:
+    links:
+      - ltnews-vuejs
+    build:
+      context: ./nginx/
+    ports:
+      - 80:80
+    volumes:
+      - ./vuejs/ltnews-frontend/dist:/usr/share/nginx/html
+      - ./django/ltnews-backend/static/admin:/usr/share/nginx/html/static/admin
+    restart: always
+
+volumes:
+  postgres_data:
+  elasticsearch_data:
