@@ -1,10 +1,12 @@
 # ltnews-docker
 Arquitectura virtualizada de LT-News
 
-#Instalación
+# Instalación
 
 ```bash
-
+git clone https://github.com/ltnews/ltnews-frontend.git vuejs/ltnews-frontend
+git clone https://github.com/ltnews/ltnews-backend.git django/ltnews-backend
+docker-compose down; docker-compose up --build
 ```
 
 # Referencias

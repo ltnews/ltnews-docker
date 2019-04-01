@@ -42,7 +42,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./vuejs/ltnews-fronted:/app
+      - ./vuejs/ltnews-frontend:/app
     restart: always
 
   ltnews-nginx:

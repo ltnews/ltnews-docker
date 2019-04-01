@@ -1,5 +1,8 @@
 FROM python:latest
 
+COPY everis.crt /usr/local/share/ca-certificates/everis.crt
+RUN update-ca-certificates
+
 # To enable logging
 ENV PYTHONUNBUFFERED 1
 
