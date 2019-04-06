@@ -1,5 +1,4 @@
 #!/bin/bash
-npm install
-npm run build
-npm run serve
-#http-server dist
+yarn install
+yarn build --no-clean
+yarn serve
