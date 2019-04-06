@@ -32,7 +32,6 @@ services:
       - 8000:8000
     volumes:
       - ./django/ltnews-backend:/code
-    restart: always
 
   ltnews-vuejs:
     links:
@@ -43,7 +42,8 @@ services:
       - 8080:8080
     volumes:
       - ./vuejs/ltnews-frontend:/app
-    restart: always
+      - vuejs_data:/app/node_modules
+    command: sh -c "npm install && npm run serve"
 
   ltnews-nginx:
     links:
@@ -54,9 +54,9 @@ services:
       - 80:80
     volumes:
       - ./vuejs/ltnews-frontend/dist:/usr/share/nginx/html
-      - ./django/ltnews-backend/static/admin:/usr/share/nginx/html/static/admin
-    restart: always
+      - ./django/ltnews-backend/staticfiles:/usr/share/nginx/html/staticfiles
 
 volumes:
   postgres_data:
   elasticsearch_data:
+  vuejs_data:

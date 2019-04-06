@@ -12,8 +12,8 @@ WORKDIR /code
 
 # Install the server dependencies
 COPY ltnews-backend/requirements.txt /code/
-RUN pip install -r requirements.txt
-COPY ltnews-backend/ .
+RUN pip install --cert /etc/ssl/certs/everis.pem -r requirements.txt
+# COPY ltnews-backend/ .
 
 # Expose port 8000 in the container
 EXPOSE 8000

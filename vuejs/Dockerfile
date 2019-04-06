@@ -3,7 +3,9 @@ FROM node:lts-alpine
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 COPY everis.crt /usr/local/share/ca-certificates/everis.crt
 RUN update-ca-certificates
-RUN npm config set registry http://registry.npmjs.org/
+
+RUN npm config set registry http://registry.npmjs.org/ && \
+    npm config set prefix "/usr/local/node_modules"
 
 # install simple http server for serving static content
 RUN npm install -g http-server
@@ -12,16 +14,19 @@ RUN npm install -g http-server
 WORKDIR /app
 
 # copy both 'package.json' and 'package-lock.json' (if available)
-COPY ltnews-frontend/package*.json ./
+# COPY ltnews-frontend/package*.json ./
 
 # install project dependencies
-RUN npm install
+# RUN npm install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
-COPY ltnews-frontend/ .
+# COPY ltnews-frontend/ .
 
 # build app for production with minification
-RUN npm run build
+# RUN npm run build
 
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+
+# Copy the entrypoint
+COPY entrypoint.sh /etc/entrypoint.sh
+#ENTRYPOINT [ "/etc/entrypoint.sh" ]
