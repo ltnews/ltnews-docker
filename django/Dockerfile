@@ -13,11 +13,11 @@ WORKDIR /code
 # Install the server dependencies
 COPY ltnews-backend/requirements.txt /code/
 RUN pip install --cert /etc/ssl/certs/everis.pem -r requirements.txt
-# COPY ltnews-backend/ .
 
 # Expose port 8000 in the container
 EXPOSE 8000
 
 # Copy the entrypoint
+COPY contrab.sh /etc/ltnews-crontab.sh
 COPY entrypoint.sh /etc/entrypoint.sh
 ENTRYPOINT [ "/etc/entrypoint.sh" ]
