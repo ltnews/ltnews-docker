@@ -1,0 +1,24 @@
+version: "3.2"
+services:
+  ltnews-django:
+    build:
+      args:
+        entrypoint: entrypoint_dev.sh
+    ports:
+      - 8000:8000
+    volumes:
+      - ./django/ltnews-backend:/code
+      
+
+  ltnews-vuejs:
+    build:
+      args:
+        entrypoint: entrypoint_dev.sh
+    ports:
+      - 8080:8080
+    volumes:
+      - ./vuejs/ltnews-frontend:/app
+      - vuejs_data:/app/node_modules
+
+volumes:
+  vuejs_data:

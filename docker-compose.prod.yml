@@ -1,0 +1,26 @@
+version: "3.2"
+services:
+  ltnews-django:
+    volumes:
+      - django_static:/code/static
+
+  ltnews-vuejs:
+    volumes:
+      - vuejs_static:/app/dist
+    
+  ltnews-nginx:
+    links:
+      - ltnews-vuejs
+    build:
+      context: ./nginx/
+    ports:
+      - 80:80
+      - 8000:8000
+    volumes:
+      - django_static:/usr/share/nginx/server/static
+      - vuejs_static:/usr/share/nginx/html
+    restart: always
+
+volumes:
+  django_static:
+  vuejs_static:
