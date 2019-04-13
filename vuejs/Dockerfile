@@ -6,6 +6,11 @@ RUN update-ca-certificates
 
 RUN npm config set registry http://registry.npmjs.org/
 
+# Environment
+ARG NODE_ENV=production
+ENV NODE_ENV=$NODE_ENV
+ENV CHOKIDAR_USEPOLLING true
+
 # install vue cli
 RUN yarn global add @vue/cli
 
@@ -27,7 +32,6 @@ RUN yarn build --no-clean
 
 # Expose port 8080 in the container and detect the changes in hot-reload
 EXPOSE 8080
-ENV CHOKIDAR_USEPOLLING true
 
 # Copy the entrypoint
 ARG entrypoint=entrypoint.sh

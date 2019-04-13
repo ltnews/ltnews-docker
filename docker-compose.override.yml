@@ -4,6 +4,8 @@ services:
     build:
       args:
         entrypoint: entrypoint_dev.sh
+    environment:
+      - DJANGO_DEBUG=True
     ports:
       - 8000:8000
     volumes:
@@ -14,6 +16,7 @@ services:
     build:
       args:
         entrypoint: entrypoint_dev.sh
+        NODE_ENV: 'development'
     ports:
       - 8080:8080
     volumes:

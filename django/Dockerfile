@@ -21,6 +21,9 @@ EXPOSE 8000
 # Copy the contrab
 COPY contrab.sh /etc/ltnews-crontab.sh
 
+# Environment
+ENV DJANGO_DEBUG False
+
 # Copy the entrypoint
 ARG entrypoint=entrypoint.sh
 COPY $entrypoint /etc/entrypoint.sh
