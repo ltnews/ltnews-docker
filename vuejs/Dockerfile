@@ -6,6 +6,9 @@ RUN update-ca-certificates
 
 RUN npm config set registry http://registry.npmjs.org/
 
+# install vue cli
+RUN yarn global add @vue/cli
+
 # make the 'app' folder the current working directory
 WORKDIR /app
 
@@ -22,8 +25,9 @@ COPY ltnews-frontend/ .
 # build app for production with minification
 RUN yarn build --no-clean
 
-# Expose port 8080 in the container
+# Expose port 8080 in the container and detect the changes in hot-reload
 EXPOSE 8080
+ENV CHOKIDAR_USEPOLLING true
 
 # Copy the entrypoint
 ARG entrypoint=entrypoint.sh
