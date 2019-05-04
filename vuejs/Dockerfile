@@ -1,11 +1,5 @@
 FROM node:lts-alpine
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
-COPY everis.crt /usr/local/share/ca-certificates/everis.crt
-RUN update-ca-certificates
-
-RUN npm config set registry http://registry.npmjs.org/
-
 # Environment
 ARG NODE_ENV=production
 ENV NODE_ENV=$NODE_ENV
